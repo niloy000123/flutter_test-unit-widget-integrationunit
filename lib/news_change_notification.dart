@@ -9,12 +9,16 @@ class NewsChangeNotifier extends ChangeNotifier {
   final List<Article> _articles = [];
   List<Article> get article => _articles;
 
-  final bool _isLoading = false;
+  bool _isLoading = false;
   bool get isLoading => _isLoading;
 
   Future<void> getArticles() async {
+    print('calll');
+    _isLoading = true;
+    notifyListeners();
     var list = await _newsService.getArticles();
     _articles.addAll(list);
+    _isLoading = false;
     notifyListeners();
   }
 }
