@@ -7,7 +7,7 @@ import 'package:mocktail/mocktail.dart';
 class MockNewsService extends Mock implements NewsService {}
 
 void main() {
-  late NewsChangeNotifier sut;
+  late NewsChangeNotifier sut; //system under test
   late MockNewsService mockNewsService;
 
   setUp(

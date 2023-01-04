@@ -12,4 +12,11 @@ class NewsService {
     await Future.delayed(const Duration(seconds: 1));
     return _articles;
   }
+
+  Future<Article> getArticless() async {
+    await Future.delayed(const Duration(seconds: 1));
+    return Article(
+        title: lorem(paragraphs: 1, words: 3),
+        content: lorem(paragraphs: 10, words: 500));
+  }
 }
