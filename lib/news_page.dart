@@ -36,10 +36,10 @@ class _NewsPageState extends State<NewsPage> {
               elevation: 2,
               child: InkWell(
                 onTap: () {
-                  MaterialPageRoute(
+                  Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) =>
                         ArticlePage(article: article.content!),
-                  );
+                  ));
                 },
                 child: ListTile(
                   title: Text(article.title!),

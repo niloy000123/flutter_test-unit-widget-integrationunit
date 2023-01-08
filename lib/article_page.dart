@@ -6,8 +6,12 @@ class ArticlePage extends StatelessWidget {
   final String article;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text(article),
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
+          child: Text(article),
+        ),
+      ),
     );
   }
 }

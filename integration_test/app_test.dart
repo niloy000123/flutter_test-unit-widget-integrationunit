@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_test_app/article.dart';
+import 'package:flutter_test_app/article_page.dart';
 import 'package:flutter_test_app/news_change_notification.dart';
 import 'package:flutter_test_app/news_page.dart';
 import 'package:flutter_test_app/news_service.dart';
@@ -40,37 +41,17 @@ void main() {
         .thenAnswer((invocation) async => articlesFromServices);
   }
 
-  arrangeNewsServiceReturn3ArticlesAfter2SecWait() {
-    when(() => mockNewsService.getArticles()).thenAnswer((invocation) async {
-      await Future.delayed(const Duration(seconds: 2));
-      return articlesFromServices;
-    });
-  }
-
-  testWidgets("Title is display", (WidgetTester tester) async {
+  testWidgets("tap on first art. and open article page", (tester) async {
     arrangeNewsServiceReturn3Articles();
     await tester.pumpWidget(createWidgetUnderTest());
-    expect(find.text("news"), findsOneWidget);
-  });
+    await tester.pump();
 
-  testWidgets("Loading indicator is display while weating for articles",
-      (WidgetTester tester) async {
-    arrangeNewsServiceReturn3ArticlesAfter2SecWait();
-    await tester.pumpWidget(createWidgetUnderTest());
-    await tester.pump(const Duration(microseconds: 500));
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    await tester.tap(find.text("Test 1 Content"));
     await tester.pumpAndSettle();
-  });
 
-  testWidgets(
-    'articles and display',
-    (tester) async {
-      arrangeNewsServiceReturn3Articles();
-      await tester.pumpWidget(createWidgetUnderTest());
-      await tester.pump();
-      for (var article in articlesFromServices) {
-        expect(find.text(article.title!), findsOneWidget);
-      }
-    },
-  );
+    expect(find.byType(NewsPage), findsNothing);
+    expect(find.byType(ArticlePage), findsOneWidget);
+
+    expect(find.text('Test 1 Content'), findsOneWidget);
+  });
 }
